@@ -18,7 +18,7 @@ inputs:
   tags:
     description: "List of tags."
     required: true
-  tar-file:
+  tar_file:
     description: "Tarball name to save the image, the file is saved into Workspace by default."
     required: false
   build-args:
