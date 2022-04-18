@@ -6,6 +6,7 @@ KANIKO_CONTEXT="/github/workspace"
 COMMAND="/kaniko/executor --context $KANIKO_CONTEXT"
 
 ln -s $HOME/.docker /kaniko/.docker
+ls -al $HOME/.config/gcloud
 
 if [ -n "$FILE" ]; then  
     KANIKO_FILE=${FILE}
