@@ -3,7 +3,7 @@
 set -e
 
 KANIKO_CONTEXT="/github/workspace"
-COMMAND="/kaniko/executor --context "$KANIKO_CONTEXT" \\"
+COMMAND="/kaniko/executor --context $KANIKO_CONTEXT"
 
 ln -s $HOME/.docker /kaniko/.docker
 
@@ -31,10 +31,10 @@ elif [ -n "$INPUT_TAGS" ]; then
     LOCAL_TAGS=$INPUT_TAGS
 fi
 
-COMMAND="${COMMAND}  --dockerfile ${KANIKO_CONTEXT}/${KANIKO_FILE} \\"
+COMMAND="${COMMAND} --dockerfile ${KANIKO_CONTEXT}/${KANIKO_FILE}"
 
 for TAG in ${LOCAL_TAGS}; do
-   COMMAND="${COMMAND}  --destination ${TAG} \\"
+   COMMAND="${COMMAND} --destination ${TAG}"
 done
 
 # /kaniko/executor --context "$CONTEXT_PATH" \
