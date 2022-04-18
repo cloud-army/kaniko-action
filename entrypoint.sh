@@ -34,8 +34,7 @@ fi
 COMMAND="${COMMAND}  --dockerfile ${KANIKO_CONTEXT}/${KANIKO_FILE} \\"
 
 for TAG in ${LOCAL_TAGS}; do
-    echo $TAG
-    #COMMAND="${COMMAND}  --destination ${TAG} \\"
+   COMMAND="${COMMAND}  --destination ${TAG} \\"
 done
 
 # /kaniko/executor --context "$CONTEXT_PATH" \
@@ -45,4 +44,6 @@ done
 #     --dockerfile "$CONTEXT_PATH"/Dockerfile \
 #     --tarPath export.tar
 
-#${COMMAND}
+echo $COMMAND
+
+${COMMAND}
