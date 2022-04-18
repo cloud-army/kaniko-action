@@ -1,0 +1,41 @@
+name: 'kaniko - Build Images In Kubernetes'
+description: 'GitHub Action for build/push Docker Images with Kaniko.'
+author: 'ByMarshall <montillajcx@gmail.com>'
+branding:
+  icon: 'cloud'
+  color: 'blue'
+inputs:
+  context:
+    description: 'Path to the build context. Default to the workspace'
+    required: false
+  file:
+    description: 'Path to the Dockerfile. Default to Dockerfile. It must be in the context. If set, this action passes the relative path to Kaniko, same as the behavior of docker build	--dockerfile'
+    required: false
+  push:
+    description: "Push an image to the registry. Default to true"
+    required: false
+    default: 'true'
+  tags:
+    description: "List of tags."
+    required: true
+  build-args:
+    description: 'Extra build-args'
+    required: false
+  kaniko-args:
+    description: 'Extra arguments for the CLI command'
+    required: false
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+
+
+  labels *1	List of metadata for an image	--label
+push *1	Push an image to the registry. Default to true	--no-push
+tags *1	List of tags	--destination
+target *1	Target stage to build	--target
+cache	Enable caching layers	--cache
+cache-repository	Repository for storing cached layers	--cache-repo
+cache-ttl	Cache timeout	--cache-ttl
+push-retry	Number of retries for the push of an image	--push-retry
+registry-mirror	Use registry mirror(s)	--registry-mirror
+verbosity	Set the logging level	--verbosity
