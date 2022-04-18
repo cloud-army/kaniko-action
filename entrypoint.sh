@@ -33,7 +33,7 @@ fi
 
 COMMAND="${COMMAND}  --dockerfile ${KANIKO_CONTEXT}/${KANIKO_FILE} \\"
 
-for TAG in ${LOCAL_TAGS[@]}; do
+for TAG in ${LOCAL_TAGS}; do
     echo $TAG
     #COMMAND="${COMMAND}  --destination ${TAG} \\"
 done
