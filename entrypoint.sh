@@ -22,7 +22,7 @@ elif [ -n "$INPUT_CONTEXT" ]; then
 fi
 
 if [ "$PUSH" == "false" ] || [ "$INPUT_PUSH" == "false" ]; then  
-    KANIKO_PUSH="--no-push"
+    COMMAND="${COMMAND} --no-push"
 fi
 
 if [ -n "$TAGS" ]; then
@@ -36,6 +36,16 @@ COMMAND="${COMMAND} --dockerfile ${KANIKO_CONTEXT}/${KANIKO_FILE}"
 for TAG in ${LOCAL_TAGS}; do
    COMMAND="${COMMAND} --destination ${TAG}"
 done
+
+if [ -n "$TAR_FILE" ]; then  
+    KANIKO_TARFILE="${KANIKO_CONTEXT}/$TAR_FILE"
+elif [ -n "$INPUT_TAR_FILE" ]; then  
+    KANIKO_TARFILE="${KANIKO_CONTEXT}/$INPUT_TAR_FILE"
+fi
+
+if [ -n "$KANIKO_TARFILE"]; then
+    COMMAND="${COMMAND} --tarPath ${KANIKO_TARFILE}"
+fi
 
 # /kaniko/executor --context "$CONTEXT_PATH" \
 #     --no-push \
