@@ -41,7 +41,10 @@ if [ -n "$TAR_FILE" ]; then
     KANIKO_TARFILE="${KANIKO_CONTEXT}/$TAR_FILE"
 elif [ -n "$INPUT_TAR_FILE" ]; then  
     KANIKO_TARFILE="${KANIKO_CONTEXT}/$INPUT_TAR_FILE"
+    echo $KANIKO_TARFILE
 fi
+
+echo $INPUT_TAR_FILE
 
 if [ -n "$KANIKO_TARFILE"]; then
     COMMAND="${COMMAND} --tarPath ${KANIKO_TARFILE}"
