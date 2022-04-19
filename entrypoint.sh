@@ -39,8 +39,8 @@ done
 
 if [ -n "$LABELS" ]; then
     LOCAL_LABELS=$LABELS
-elif [ -n "$INPUT_TAGS" ]; then  
-    LOCAL_LABELS=$INPUT_TAGS
+elif [ -n "$INPUT_LABELS" ]; then  
+    LOCAL_LABELS=$INPUT_LABELS
 fi
 
 for LABEL in ${LOCAL_LABELS}; do
