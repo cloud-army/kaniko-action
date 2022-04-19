@@ -18,6 +18,9 @@ inputs:
   tags:
     description: "List of tags."
     required: true
+  labels:
+    description: "List of metadata labels for an image."
+    required: false
   tar_file:
     description: "Tarball name to save the image, the file is saved into Workspace by default."
     required: false

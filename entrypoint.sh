@@ -25,16 +25,26 @@ if [ "$PUSH" == "false" ] || [ "$INPUT_PUSH" == "false" ]; then
     COMMAND="${COMMAND} --no-push"
 fi
 
+COMMAND="${COMMAND} --dockerfile ${KANIKO_CONTEXT}/${KANIKO_FILE}"
+
 if [ -n "$TAGS" ]; then
     LOCAL_TAGS=$TAGS
 elif [ -n "$INPUT_TAGS" ]; then  
     LOCAL_TAGS=$INPUT_TAGS
 fi
 
-COMMAND="${COMMAND} --dockerfile ${KANIKO_CONTEXT}/${KANIKO_FILE}"
-
 for TAG in ${LOCAL_TAGS}; do
    COMMAND="${COMMAND} --destination ${TAG}"
+done
+
+if [ -n "$LABELS" ]; then
+    LOCAL_LABELS=$LABELS
+elif [ -n "$INPUT_TAGS" ]; then  
+    LOCAL_LABELS=$INPUT_TAGS
+fi
+
+for LABEL in ${LOCAL_LABELS}; do
+   COMMAND="${COMMAND} --label ${LABEL}}"
 done
 
 if [ -n "$TAR_FILE" ]; then  
@@ -48,13 +58,6 @@ if [ -n "$KANIKO_TARFILE" ]; then
     COMMAND="${COMMAND} --tarPath ${KANIKO_TARFILE}"
 fi
 
-# /kaniko/executor --context "$CONTEXT_PATH" \
-#     --no-push \
-#     --destination dummy_name \
-#     --build-arg VERSION="$VERSION" \
-#     --dockerfile "$CONTEXT_PATH"/Dockerfile \
-#     --tarPath export.tar
-
-echo $COMMAND
+echo "Launching kaniko with the following parameters: $COMMAND"
 
 ${COMMAND}
