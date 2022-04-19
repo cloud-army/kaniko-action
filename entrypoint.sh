@@ -44,7 +44,7 @@ elif [ -n "$INPUT_LABELS" ]; then
 fi
 
 for LABEL in ${LOCAL_LABELS}; do
-   COMMAND="${COMMAND} --label ${LABEL}}"
+   COMMAND="${COMMAND} --label ${LABEL}"
 done
 
 if [ -n "$TAR_FILE" ]; then  
