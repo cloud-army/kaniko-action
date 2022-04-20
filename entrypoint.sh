@@ -43,10 +43,9 @@ elif [ -n "$INPUT_METADATA" ]; then
     LOCAL_LABELS=$(echo $INPUT_METADATA | jq -r '.labels | keys[] as $k | "\($k)=\"\(.[$k])\""')
 fi
 
-
 echo $LOCAL_LABELS
 
-for LABEL in ${LOCAL_LABELS}; do
+for LABEL in "${LOCAL_LABELS}"; do
    COMMAND="${COMMAND} --label ${LABEL}"
 done
 
