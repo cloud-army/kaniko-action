@@ -21,9 +21,6 @@ inputs:
   labels:
     description: "List of metadata labels for an image."
     required: false
-  metadata:
-    description: "JSON format metadata of an image."
-    required: false
   tar_file:
     description: "Tarball name to save the image, the file is saved into Workspace by default."
     required: false

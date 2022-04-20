@@ -4,9 +4,7 @@ set -e
 
 KANIKO_CONTEXT="/github/workspace"
 COMMAND="/kaniko/executor --context $KANIKO_CONTEXT"
-ls -al /busybox/
 
-echo env
 ln -s $HOME/.docker /kaniko/.docker
 
 if [ -n "$FILE" ]; then  
@@ -39,23 +37,21 @@ for TAG in ${LOCAL_TAGS}; do
    COMMAND="${COMMAND} --destination ${TAG}"
 done
 
-if [ -n "$METADATA" ]; then
-    LOCAL_LABELS=$(echo $METADATA | /bin/jq -r '.labels | keys[] as $k | "\($k)=\"\(.[$k])\""')
-elif [ -n "$INPUT_METADATA" ]; then  
-    LOCAL_LABELS=$(echo $INPUT_METADATA | /bin/jq -r '.labels | keys[] as $k | "\($k)=\"\(.[$k])\""')
+if [ -n "$LABELS" ]; then
+    LOCAL_LABELS=$LABELS
+elif [ -n "$INPUT_LABELS" ]; then  
+    LOCAL_LABELS=$INPUT_LABELS
 fi
 
-echo $LOCAL_LABELS
-
-for LABEL in "${LOCAL_LABELS}"; do
-   COMMAND="${COMMAND} --label ${LABEL}"
+OLDIFS="$IFS"
+IFS=$'\n' # to iterate over labels
+for LABEL in $LABELS; do
+    KEY=$(echo $LABEL | cut -d "=" -f 1)
+    VALUE=$(echo $LABEL | cut -d "=" -f 2)
+    COMMAND="${COMMAND} --label ${KEY}='${VALUE}'" # ensure consitents labels
 done
 
-# while IFS= read -r LABEL; do
-#     KEY=$(echo $LABEL | cut -d "=" -f 1)
-#     VALUE=$(echo $LABEL | cut -d "=" -f 2)
-#     COMMAND="${COMMAND} --label ${KEY}='${VALUE}'"
-# done < $(printf '%s\n' "$LOCAL_LABELS")
+IFS="$OLDIFS"
 
 if [ -n "$TAR_FILE" ]; then  
     KANIKO_TARFILE="${KANIKO_CONTEXT}/$TAR_FILE"
