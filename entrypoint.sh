@@ -37,13 +37,18 @@ for TAG in ${LOCAL_TAGS}; do
    COMMAND="${COMMAND} --destination ${TAG}"
 done
 
-if [ -n "$LABELS" ]; then
-    LOCAL_LABELS=$LABELS
-elif [ -n "$INPUT_LABELS" ]; then  
-    LOCAL_LABELS=$INPUT_LABELS
+if [ -n "$METADATA" ]; then
+    LOCAL_LABELS=$(echo $METADATA | jq -r '.labels | keys[] as $k | "\($k)=\"\(.[$k])\""')
+elif [ -n "$INPUT_METADATA" ]; then  
+    LOCAL_LABELS=$(echo $INPUT_METADATA | jq -r '.labels | keys[] as $k | "\($k)=\"\(.[$k])\""')
 fi
 
-echo $INPUT_METADATA
+
+echo $LOCAL_LABELS
+
+for LABEL in ${LOCAL_LABELS}; do
+   COMMAND="${COMMAND} --label ${LABEL}"
+done
 
 # while IFS= read -r LABEL; do
 #     KEY=$(echo $LABEL | cut -d "=" -f 1)
