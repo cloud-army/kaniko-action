@@ -67,4 +67,6 @@ fi
 
 echo "Launching kaniko with the following parameters: $COMMAND"
 
-${COMMAND}
+alias kaniko_build="$COMMAND" # Workaroud to handle labels with white spaces
+
+kaniko_build
