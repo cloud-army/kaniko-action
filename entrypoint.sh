@@ -3,7 +3,7 @@
 set -e
 
 KANIKO_CONTEXT="/github/workspace"
-COMMAND="/kaniko/executor --context "$KANIKO_CONTEXT" \\"
+COMMAND="/kaniko/executor --context $KANIKO_CONTEXT"
 
 ln -s $HOME/.docker /kaniko/.docker
 
@@ -22,8 +22,10 @@ elif [ -n "$INPUT_CONTEXT" ]; then
 fi
 
 if [ "$PUSH" == "false" ] || [ "$INPUT_PUSH" == "false" ]; then  
-    KANIKO_PUSH="--no-push"
+    COMMAND="${COMMAND} --no-push"
 fi
+
+COMMAND="${COMMAND} --dockerfile ${KANIKO_CONTEXT}/${KANIKO_FILE}"
 
 if [ -n "$TAGS" ]; then
     LOCAL_TAGS=$TAGS
@@ -31,17 +33,40 @@ elif [ -n "$INPUT_TAGS" ]; then
     LOCAL_TAGS=$INPUT_TAGS
 fi
 
-COMMAND="${COMMAND}  --dockerfile ${KANIKO_CONTEXT}/${KANIKO_FILE} \\"
-
-for TAG in ${LOCAL_TAGS[@]}; do
-    COMMAND="${COMMAND}  --destination ${TAG} \\"
+for TAG in ${LOCAL_TAGS}; do
+   COMMAND="${COMMAND} --destination ${TAG}"
 done
 
-# /kaniko/executor --context "$CONTEXT_PATH" \
-#     --no-push \
-#     --destination dummy_name \
-#     --build-arg VERSION="$VERSION" \
-#     --dockerfile "$CONTEXT_PATH"/Dockerfile \
-#     --tarPath export.tar
+if [ -n "$LABELS" ]; then
+    LOCAL_LABELS=$LABELS
+elif [ -n "$INPUT_LABELS" ]; then  
+    LOCAL_LABELS=$INPUT_LABELS
+fi
 
-${COMMAND}
+OLDIFS="$IFS"
+IFS=$'\n' # to iterate over labels
+
+for LABEL in $LOCAL_LABELS; do
+    KEY=$(echo $LABEL | cut -d "=" -f 1)
+    VALUE=$(echo $LABEL | cut -d "=" -f 2)
+    COMMAND="${COMMAND} --label ${KEY}=\"${VALUE}\""
+done
+
+IFS="$OLDIFS"
+
+if [ -n "$TAR_FILE" ]; then  
+    KANIKO_TARFILE="${KANIKO_CONTEXT}/$TAR_FILE"
+elif [ -n "$INPUT_TAR_FILE" ]; then  
+    KANIKO_TARFILE="${KANIKO_CONTEXT}/$INPUT_TAR_FILE"
+fi
+
+
+if [ -n "$KANIKO_TARFILE" ]; then
+    COMMAND="${COMMAND} --tarPath ${KANIKO_TARFILE}"
+fi
+
+echo "Launching kaniko with the following parameters: $COMMAND"
+
+alias kaniko_build="$COMMAND" # Workaroud to handle possible labels with white spaces
+
+kaniko_build
