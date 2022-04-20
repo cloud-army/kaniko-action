@@ -44,9 +44,9 @@ elif [ -n "$INPUT_LABELS" ]; then
 fi
 
 for LABEL in ${LOCAL_LABELS}; do
-   KEY=$(echo $LABEL | tr "=" " " | cut -d " " -f 1)
-   VALUE=$(echo $LABEL | tr "=" " " | cut -d " " -f 2)
-   COMMAND="${COMMAND} --label ${KEY}'${VALUE}'"
+   KEY=$(echo $LABEL | cut -d "=" -f 1)
+   VALUE=$(echo $LABEL | cut -d "=" -f 2)
+   COMMAND="${COMMAND} --label ${KEY}='${VALUE}'"
 done
 
 if [ -n "$TAR_FILE" ]; then  
