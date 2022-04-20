@@ -43,7 +43,7 @@ elif [ -n "$INPUT_LABELS" ]; then
     LOCAL_LABELS=$INPUT_LABELS
 fi
 
-echo $INPUT_LABELS
+echo $INPUT_METADATA
 
 # while IFS= read -r LABEL; do
 #     KEY=$(echo $LABEL | cut -d "=" -f 1)
