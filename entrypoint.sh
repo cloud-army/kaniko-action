@@ -45,7 +45,7 @@ fi
 
 OLDIFS="$IFS"
 IFS=$'\n' # to iterate over labels
-for LABEL in $LABELS; do
+for LABEL in $LOCAL_LABELS; do
     KEY=$(echo $LABEL | cut -d "=" -f 1)
     VALUE=$(echo $LABEL | cut -d "=" -f 2)
     COMMAND="${COMMAND} --label ${KEY}='${VALUE}'" # ensure consitents labels
