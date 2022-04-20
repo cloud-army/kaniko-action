@@ -49,7 +49,7 @@ IFS=$'\n' # to iterate over labels
 for LABEL in $LOCAL_LABELS; do
     KEY=$(echo $LABEL | cut -d "=" -f 1)
     VALUE=$(echo $LABEL | cut -d "=" -f 2)
-    COMMAND="${COMMAND} --label ${KEY}=\"${VALUE}\"" # ensure consitents labels
+    COMMAND="${COMMAND} --label ${KEY}=\"${VALUE}\""
 done
 
 IFS="$OLDIFS"
@@ -67,6 +67,6 @@ fi
 
 echo "Launching kaniko with the following parameters: $COMMAND"
 
-alias kaniko_build="$COMMAND" # Workaroud to handle labels with white spaces
+alias kaniko_build="$COMMAND" # Workaroud to handle possible labels with white spaces
 
 kaniko_build
