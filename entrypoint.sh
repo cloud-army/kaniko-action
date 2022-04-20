@@ -46,6 +46,8 @@ fi
 for LABEL in ${LOCAL_LABELS}; do
    KEY=$(echo $LABEL | cut -d "=" -f 1)
    VALUE=$(echo $LABEL | cut -d "=" -f 2)
+   echo "key:$KEY"
+   echo "value:$VALUE"
    COMMAND="${COMMAND} --label ${KEY}='${VALUE}'"
 done
 
