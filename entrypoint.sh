@@ -66,4 +66,4 @@ fi
 
 echo "Launching kaniko with the following parameters: $COMMAND"
 
-#${COMMAND}
+${COMMAND}
