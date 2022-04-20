@@ -4,7 +4,9 @@ set -e
 
 KANIKO_CONTEXT="/github/workspace"
 COMMAND="/kaniko/executor --context $KANIKO_CONTEXT"
+ls -al /busybox/
 
+echo env
 ln -s $HOME/.docker /kaniko/.docker
 
 if [ -n "$FILE" ]; then  
@@ -38,9 +40,9 @@ for TAG in ${LOCAL_TAGS}; do
 done
 
 if [ -n "$METADATA" ]; then
-    LOCAL_LABELS=$(echo $METADATA | jq -r '.labels | keys[] as $k | "\($k)=\"\(.[$k])\""')
+    LOCAL_LABELS=$(echo $METADATA | /bin/jq -r '.labels | keys[] as $k | "\($k)=\"\(.[$k])\""')
 elif [ -n "$INPUT_METADATA" ]; then  
-    LOCAL_LABELS=$(echo $INPUT_METADATA | jq -r '.labels | keys[] as $k | "\($k)=\"\(.[$k])\""')
+    LOCAL_LABELS=$(echo $INPUT_METADATA | /bin/jq -r '.labels | keys[] as $k | "\($k)=\"\(.[$k])\""')
 fi
 
 echo $LOCAL_LABELS
