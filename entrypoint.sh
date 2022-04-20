@@ -43,6 +43,8 @@ elif [ -n "$INPUT_LABELS" ]; then
     LOCAL_LABELS=$INPUT_LABELS
 fi
 
+echo $INPUT_LABELS
+
 while IFS= read -r LABEL; do
     KEY=$(echo $LABEL | cut -d "=" -f 1)
     VALUE=$(echo $LABEL | cut -d "=" -f 2)
@@ -62,4 +64,4 @@ fi
 
 echo "Launching kaniko with the following parameters: $COMMAND"
 
-${COMMAND}
+#${COMMAND}
