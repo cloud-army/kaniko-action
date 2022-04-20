@@ -47,7 +47,7 @@ while IFS= read -r LABEL; do
     KEY=$(echo $LABEL | cut -d "=" -f 1)
     VALUE=$(echo $LABEL | cut -d "=" -f 2)
     COMMAND="${COMMAND} --label ${KEY}='${VALUE}'"
-done < "$LOCAL_LABELS"
+done <<< "$LOCAL_LABELS"
 
 if [ -n "$TAR_FILE" ]; then  
     KANIKO_TARFILE="${KANIKO_CONTEXT}/$TAR_FILE"
