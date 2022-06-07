@@ -43,13 +43,25 @@ elif [ -n "$INPUT_LABELS" ]; then
     LOCAL_LABELS=$INPUT_LABELS
 fi
 
+if [ -n "$BUILD_ARGS" ]; then
+    LOCAL_BUILD_ARGS=$BUILD_ARGS
+elif [ -n "$INPUT_BUILD_ARGS" ]; then  
+    LOCAL_BUILD_ARGS=$INPUT_BUILD_ARGS
+fi
+
 OLDIFS="$IFS"
-IFS=$'\n' # to iterate over labels
+IFS=$'\n' # to iterate over labels and build args
 
 for LABEL in $LOCAL_LABELS; do
     KEY=$(echo $LABEL | cut -d "=" -f 1)
     VALUE=$(echo $LABEL | cut -d "=" -f 2)
     COMMAND="${COMMAND} --label ${KEY}=\"${VALUE}\""
+done
+
+for ARG in $LOCAL_BUILD_ARGS; do
+    KEY=$(echo $ARG | cut -d "=" -f 1)
+    VALUE=$(echo $ARG | cut -d "=" -f 2)
+    COMMAND="${COMMAND} --build-arg ${KEY}=\"${VALUE}\""
 done
 
 IFS="$OLDIFS"

@@ -25,7 +25,7 @@ inputs:
     description: "Tarball name to save the image, the file is saved into Workspace by default."
     required: false
   build-args:
-    description: 'Extra build-args'
+    description: 'List of extra build-args (build-time variables)'
     required: false
   kaniko-args:
     description: 'Extra arguments for the CLI command'
