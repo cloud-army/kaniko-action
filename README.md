@@ -1,4 +1,4 @@
-# kaniko-action 
+# kaniko-action
 
 > [GitHub Action](https://github.com/features/actions) for [Kaniko](https://github.com/GoogleContainerTools/kaniko)
 
