@@ -24,11 +24,8 @@ inputs:
   tar_file:
     description: "Tarball name to save the image, the file is saved into Workspace by default."
     required: false
-  build-args:
+  build_args:
     description: 'Space separated list of extra build-args (build-time variables)'
-    required: false
-  kaniko-args:
-    description: 'Extra arguments for the CLI command'
     required: false
 runs:
   using: 'docker'
