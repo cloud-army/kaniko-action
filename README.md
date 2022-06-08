@@ -1,4 +1,4 @@
-# kaniko-action 
+# kaniko-action
 
 > [GitHub Action](https://github.com/features/actions) for [Kaniko](https://github.com/GoogleContainerTools/kaniko)
 
@@ -30,10 +30,10 @@ _If you are interested in contributing, see [CONTRIBUTING.md](CONTRIBUTING.md)._
 
 If available, this action will provide Docker Credentials to kaniko from `~/.docker/config.json`.
 
-_**Note:** If a `config.json` file is not provided, kaniko will attempt to use other authentication mechanisms such as
-workload identity to GKE for authentication against the remote registry._
+_**Note:** If a `config.json` file is not provided, kaniko will attempt to use other authentication mechanisms such as [workload identity for GKE](https://github.com/GoogleContainerTools/kaniko#pushing-to-gcr-using-workload-identity). This is the prefered and recommended method if you are executing this github action into a GKE Cluster, Workload identity provides a keyless authentication
+mechanism against the GCR remote registry._
 
-### Workflow
+### Example Workflows
 
 To build and push a container image to GitHub Container Registry,
 
@@ -115,5 +115,6 @@ Following inputs can be used as `step.with` keys:
 | `tags`           | List    |                                    | List of tags of the image.                                                     |
 | `labels`         | List    |                                    | List of labels of the image.                                                   |
 | `tar_file`       | String  |                                    | Tarball name to save the image. The file is saved into Workspace by default.   |
+| `build_args`     | List    |                                    | List of [build-time variables.](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#build-arg)   |
 
 ### _🚨 NOTE: kaniko and this github action are not an officially supported Google product🚨_
