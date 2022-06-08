@@ -4,7 +4,7 @@
 <!-- Please describe the behavior or changes that are being added by this PR. -->
 Fixes #<issue number> _in case of a bug fix, this should point to a bug and any other related issue(s)_
 
-## How we can reproduce the environment to functional testing?
+## How we can reproduce
 <!-- Please describe steps that must be done in order to test PR. -->
 
 ## Submitter Checklist
