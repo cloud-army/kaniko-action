@@ -115,6 +115,6 @@ Following inputs can be used as `step.with` keys:
 | `tags`           | List    |                                    | List of tags of the image.                                                     |
 | `labels`         | List    |                                    | List of labels of the image.                                                   |
 | `tar_file`       | String  |                                    | Tarball name to save the image. The file is saved into Workspace by default.   |
-| `build_args`     | List    |                                    | List of [build-time variables.](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#build-arg)   |
+| `build_args`     | List    |                                    | Space separated list of [build-time variables.](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#build-arg)   |
 
 ### _🚨 NOTE: kaniko and this github action are not an officially supported Google product🚨_
