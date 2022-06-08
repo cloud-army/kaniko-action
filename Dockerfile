@@ -1,4 +1,4 @@
-FROM gcr.io/kaniko-project/executor:debug
+FROM gcr.io/kaniko-project/executor:v1.8.1-debug
 
 COPY LICENSE README.md /
 
