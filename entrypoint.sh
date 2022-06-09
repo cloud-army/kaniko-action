@@ -80,7 +80,7 @@ if [ -n "$KANIKO_TARFILE" ]; then
     COMMAND="${COMMAND} --tarPath ${KANIKO_TARFILE}"
 fi
 
-if [ "$DEBUG" == "true" ] || [ "$INPUT_DEBUG" == "true" ]; then
+if [ "$DEBUG_MODE" == "true" ] || [ "$INPUT_DEBUG_MODE" == "true" ]; then
     echo -e "${RED}WARNING!!${NC}Debug mode has been set to true, sensitive data may could be exposed!!"
     echo "Launching kaniko with the following parameters:"
     echo "${COMMAND}"
