@@ -2,8 +2,11 @@
 
 set -e
 
+
 KANIKO_CONTEXT="/github/workspace"
 COMMAND="/kaniko/executor --context $KANIKO_CONTEXT"
+RED='\033[0;31m' # Red color for warning messages
+NC='\033[0m' # No Color
 
 ln -s $HOME/.docker /kaniko/.docker
 
@@ -77,7 +80,13 @@ if [ -n "$KANIKO_TARFILE" ]; then
     COMMAND="${COMMAND} --tarPath ${KANIKO_TARFILE}"
 fi
 
-echo "Launching kaniko with the following parameters: $COMMAND"
+if [ "$DEBUG" == "true" ] || [ "$INPUT_DEBUG" == "true" ]; then
+    echo -e "${RED}WARNING!!${NC}Debug mode has been set to true, sensitive data may could be exposed!!"
+    echo "Launching kaniko with the following parameters:"
+    echo "${COMMAND}"
+else
+    echo "Launching kaniko..."
+fi
 
 alias kaniko_build="$COMMAND" # Workaroud to handle possible labels with white spaces
 
