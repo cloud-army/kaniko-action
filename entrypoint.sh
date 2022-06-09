@@ -81,7 +81,7 @@ if [ -n "$KANIKO_TARFILE" ]; then
 fi
 
 if [ "$DEBUG_MODE" == "true" ] || [ "$INPUT_DEBUG_MODE" == "true" ]; then
-    echo -e "${RED}WARNING!!${NC}Debug mode has been set to true, sensitive data may could be exposed!!"
+    echo -e "${RED}WARNING!!${NC} Debug mode has been set to true, some sensitive data used to build the image may will be exposed!!"
     echo "Launching kaniko with the following parameters:"
     echo "${COMMAND}"
 else
