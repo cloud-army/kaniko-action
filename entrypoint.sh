@@ -99,7 +99,7 @@ else
     KANIKO_SNAPSHOT_MODE="full"
 fi
 
-if [ "$CACHE" == "true" ] || [ "$INPUT_CACHE" == "true" ]; then  
+if [ -n "$KANIKO_SNAPSHOT_MODE" ]; then
     COMMAND="${COMMAND} --snapshotMode=${KANIKO_SNAPSHOT_MODE}"
 fi
 
