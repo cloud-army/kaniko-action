@@ -43,6 +43,10 @@ inputs:
     description: Set this flag to set how kaniko will snapshot the filesystem (full, redo, time). Default to full.
     required: false
     default: 'full'
+  use_new_run:
+    description: Use the experimental run implementation for detecting changes without requiring file system snapshots. In some cases, this may improve build performance by 75%.
+    required: false
+    default: 'false'
 runs:
   using: 'docker'
   image: 'Dockerfile'

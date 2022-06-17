@@ -103,6 +103,10 @@ if [ -n "$KANIKO_SNAPSHOT_MODE" ]; then
     COMMAND="${COMMAND} --snapshotMode=${KANIKO_SNAPSHOT_MODE}"
 fi
 
+if [ "$USE_NEW_RUN" == "true" ] || [ "$INPUT_USE_NEW_RUN" == "true" ]; then  
+    COMMAND="${COMMAND} --use-new-run"
+fi
+
 if [ "$DEBUG_MODE" == "true" ] || [ "$INPUT_DEBUG_MODE" == "true" ]; then
     echo -e "${RED}WARNING!!${NC} Debug mode has been set to true, some sensitive data used to build the image may will be exposed!!"
     echo "Launching kaniko with the following parameters:"

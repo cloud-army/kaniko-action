@@ -120,6 +120,7 @@ Following inputs can be used as `step.with` keys:
 | `cache`          | Boolean    | false                           |  Set this flag as true to opt into [caching](https://github.com/GoogleContainerTools/kaniko#caching-layers) with kaniko. |
 | `cache_ttl`      | String     | 12h                           |  Cache timeout in hours. Defaults to 12 hours. |
 | `snapshot_mode`      | String     | full                           |  You can set this flag to set how kaniko will [snapshot the filesystem](https://github.com/GoogleContainerTools/kaniko#--snapshotmode). Valid options are (full, redo, time).|
+| `use_new_run`      | Boolean     | false                           |  Use the experimental run implementation for detecting changes without requiring file system snapshots. In some cases, this may improve build performance by 75%. |
 
 ## Build performance
 
@@ -139,6 +140,10 @@ you could consider enabling the following settings that can help speed up your b
   You can set this flag to set how kaniko will snapshot the filesystem. Valid options are (full, redo, time).
 
   Redo mode may be up to 50% faster than "full", particularly if your project has a large number files.
+
+- `use_new_run: true`
+
+  Use the experimental run implementation for detecting changes without requiring file system snapshots. In some cases, this may improve build performance by 75%.
 
 Example:
 
@@ -168,7 +173,9 @@ jobs:
             cache: true
             cache_ttl: 6h
             snapshot_mode: redo
+            use_new_run: true
 ```
+
 ### Kaniko references:
 
 - https://github.com/GoogleContainerTools/kaniko#caching-layers
