@@ -116,7 +116,10 @@ Following inputs can be used as `step.with` keys:
 | `labels`         | List    |                                    | List of labels of the image.                                                   |
 | `tar_file`       | String  |                                    | Tarball name to save the image. The file is saved into Workspace by default.   |
 | `build_args`     | List    |                                    | Space separated list of [build-time variables.](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#build-arg)   |
-| `debug_mode`     | Boolean    |                                 | Set debug mode true to display the command line and parameters that has been used to build the image. Warning!! some sensitive data used to build the image may will be exposed.   |
+| `debug_mode`     | Boolean    |                                 | Set debug mode true to display the command line and parameters that has been used to build the image. Warning!! some sensitive data used to build the image may will be exposed. |
+| `cache`          | Boolean    | false                           |  Set this flag as true to opt into [caching](https://github.com/GoogleContainerTools/kaniko#caching-layers) with kaniko. |
+| `cache_ttl`      | String     | 12h                           |  Cache timeout in hours. Defaults to 12 hours. |
+| `snapshot_mode`      | String     | full                           |  You can set this flag to set how kaniko will [snapshot the filesystem](https://github.com/GoogleContainerTools/kaniko#--snapshotmode). Valid options are (full, redo, time).|
 
 ## Build performance
 
