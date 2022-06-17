@@ -100,7 +100,7 @@ else
 fi
 
 if [ "$CACHE" == "true" ] || [ "$INPUT_CACHE" == "true" ]; then  
-    COMMAND="${COMMAND} --snapshot-mode=${KANIKO_SNAPSHOT_MODE}"
+    COMMAND="${COMMAND} --snapshotMode=${KANIKO_SNAPSHOT_MODE}"
 fi
 
 if [ "$DEBUG_MODE" == "true" ] || [ "$INPUT_DEBUG_MODE" == "true" ]; then
