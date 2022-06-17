@@ -23,7 +23,7 @@ _If you are interested in contributing, see [CONTRIBUTING.md](CONTRIBUTING.md)._
   - [Workflow](#workflow)
 - [Customizing](#customizing)
   - [Inputs](#inputs)
-
+- [Build performance](#build-performance)
 ## Usage
 
 ### Authentication
@@ -116,6 +116,70 @@ Following inputs can be used as `step.with` keys:
 | `labels`         | List    |                                    | List of labels of the image.                                                   |
 | `tar_file`       | String  |                                    | Tarball name to save the image. The file is saved into Workspace by default.   |
 | `build_args`     | List    |                                    | Space separated list of [build-time variables.](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#build-arg)   |
-| `debug_mode`     | Boolean    |                                 | Set debug mode true to display the command line and parameters that has been used to build the image. Warning!! some sensitive data used to build the image may will be exposed.   |
+| `debug_mode`     | Boolean    |                                 | Set debug mode true to display the command line and parameters that has been used to build the image. Warning!! some sensitive data used to build the image may will be exposed. |
+| `cache`          | Boolean    | false                           |  Set this flag as true to opt into [caching](https://github.com/GoogleContainerTools/kaniko#caching-layers) with kaniko. |
+| `cache_ttl`      | String     | 12h                           |  Cache timeout in hours. Defaults to 12 hours. |
+| `snapshot_mode`      | String     | full                           |  You can set this flag to set how kaniko will [snapshot the filesystem](https://github.com/GoogleContainerTools/kaniko#--snapshotmode). Valid options are (full, redo, time).|
+| `use_new_run`      | Boolean     | false                           |  Use the experimental run implementation for detecting changes without requiring file system snapshots. In some cases, this may improve build performance by 75%. |
+
+## Build performance
+
+In some cases kaniko image build performance may be less efficient; In order to improve the performance,
+you could consider enabling the following settings that can help speed up your build time:
+
+- `cache: true`
+
+  Set this flag as true to opt into caching with kaniko.
+
+- `cache_ttl: duration`
+
+  Cache timeout in hours. Defaults to 12 hours.
+
+- `snapshot_mode: redo`
+
+  You can set this flag to set how kaniko will snapshot the filesystem. Valid options are (full, redo, time).
+
+  Redo mode may be up to 50% faster than "full", particularly if your project has a large number files.
+
+- `use_new_run: true`
+
+  Use the experimental run implementation for detecting changes without requiring file system snapshots. In some cases, this may improve build performance by 75%.
+
+Example:
+
+```yaml
+jobs:
+  build:
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: docker/metadata-action@v3
+        id: metadata
+        with:
+          images: ghcr.io/${{ github.repository }}
+
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Kaniko build & push
+          uses: bymarshall/kaniko-action@main
+          with:
+            push: true
+            tags: ${{ steps.metadata.outputs.tags }}
+            labels: ${{ steps.metadata.outputs.labels }}
+            cache: true
+            cache_ttl: 6h
+            snapshot_mode: redo
+            use_new_run: true
+```
+
+### Kaniko references:
+
+- https://github.com/GoogleContainerTools/kaniko#caching-layers
+
+- https://github.com/GoogleContainerTools/kaniko#--snapshotmode
 
 ### _🚨 NOTE: kaniko and this github action are not an officially supported Google product🚨_

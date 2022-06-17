@@ -75,9 +75,36 @@ elif [ -n "$INPUT_TAR_FILE" ]; then
     KANIKO_TARFILE="${KANIKO_CONTEXT}/$INPUT_TAR_FILE"
 fi
 
-
 if [ -n "$KANIKO_TARFILE" ]; then
     COMMAND="${COMMAND} --tarPath ${KANIKO_TARFILE}"
+fi
+
+if [ -n "$CACHE_TTL" ]; then
+    KANIKO_CACHE_TTL=$CACHE_TTL
+elif [ -n "$INPUT_CACHE_TTL" ]; then 
+    KANIKO_CACHE_TTL=$INPUT_CACHE_TTL
+else
+    KANIKO_CACHE_TTL="12h"
+fi
+
+if [ "$CACHE" == "true" ] || [ "$INPUT_CACHE" == "true" ]; then  
+    COMMAND="${COMMAND} --cache=true --cache-ttl=${KANIKO_CACHE_TTL}"
+fi
+
+if [ -n "$SNAPSHOT_MODE" ]; then
+    KANIKO_SNAPSHOT_MODE=$SNAPSHOT_MODE
+elif [ -n "$INPUT_SNAPSHOT_MODE" ]; then 
+    KANIKO_SNAPSHOT_MODE=$INPUT_SNAPSHOT_MODE
+else
+    KANIKO_SNAPSHOT_MODE="full"
+fi
+
+if [ -n "$KANIKO_SNAPSHOT_MODE" ]; then
+    COMMAND="${COMMAND} --snapshotMode=${KANIKO_SNAPSHOT_MODE}"
+fi
+
+if [ "$USE_NEW_RUN" == "true" ] || [ "$INPUT_USE_NEW_RUN" == "true" ]; then  
+    COMMAND="${COMMAND} --use-new-run"
 fi
 
 if [ "$DEBUG_MODE" == "true" ] || [ "$INPUT_DEBUG_MODE" == "true" ]; then

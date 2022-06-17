@@ -31,6 +31,22 @@ inputs:
     description: 'Set debug mode true to display the command line and parameters that has been used to build the image. Warning!! some sensitive data used to build the image may will be exposed.'
     required: false
     default: 'false'
+  cache:
+    description: 'Set this flag as true to opt into caching with kaniko.'
+    required: false
+    default: 'false'
+  cache_ttl:
+    description: Cache timeout in hours. Defaults to 12h.
+    required: false
+    default: '12h'
+  snapshot_mode:
+    description: Set this flag to set how kaniko will snapshot the filesystem (full, redo, time). Default to full.
+    required: false
+    default: 'full'
+  use_new_run:
+    description: Use the experimental run implementation for detecting changes without requiring file system snapshots. In some cases, this may improve build performance by 75%.
+    required: false
+    default: 'false'
 runs:
   using: 'docker'
   image: 'Dockerfile'
