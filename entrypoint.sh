@@ -4,7 +4,7 @@ set -e
 
 
 KANIKO_CONTEXT="/github/workspace"
-COMMAND="/kaniko/executor --context $KANIKO_CONTEXT"
+COMMAND="/kaniko/executor"
 RED='\033[0;31m' # Red color for warning messages
 NC='\033[0m' # No Color
 
@@ -23,6 +23,8 @@ if [ -n "$CONTEXT" ]; then
 elif [ -n "$INPUT_CONTEXT" ]; then  
     KANIKO_CONTEXT="${KANIKO_CONTEXT}/${INPUT_CONTEXT}"
 fi
+
+COMMAND="${COMMAND} --context ${KANIKO_CONTEXT}"
 
 if [ "$PUSH" == "false" ] || [ "$INPUT_PUSH" == "false" ]; then  
     COMMAND="${COMMAND} --no-push"
